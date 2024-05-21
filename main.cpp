@@ -1,5 +1,4 @@
 #include "common.h"
-//#include "ground.h"
 #include "Object.h"
 #include "score.h"
 #define STB_IMAGE_IMPLEMENTATION
