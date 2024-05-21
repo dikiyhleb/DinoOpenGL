@@ -1,8 +1,6 @@
 #include "common.h"
-#include "ground.h"
-#include "cactus.h"
-#include "dinosaur.h"
-#include "bird.h"
+//#include "ground.h"
+#include "Object.h"
 #include "score.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -21,11 +19,7 @@ number2, number3, number4, number5, number6, number7, number8, number9, textureB
 
 float gameSpeed = 1.25f;
 
-float vertexDino[] = { -0.1,-0.1,0 , 0.1,-0.1,0 , 0.1,0.1,0 , -0.1,0.1,0 };
-float vertexGround[] = { -1,-1,0 , 1,-1,0 , 1,1,0 , -1,1,0 };
-float vertexCactus[] = { -0.1,-0.1,0 , 0.1,-0.1,0 , 0.1,0.1,0 , -0.1,0.1,0 };
 float vertexNum[] = { -0.05,-0.05,0 , 0.05,-0.05,0 , 0.05,0.05,0 , -0.05,0.05,0 };
-float vertexBird[] = { -0.1,-0.1,0 , 0.1,-0.1,0 , 0.1,0.1,0 , -0.1,0.1,0 };
 
 float texCoord[] = { 0,1 , 1,1 , 1,0 , 0,0 };
 
@@ -36,18 +30,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 void checkCollision(Dinosaur &dino, Bird& bird, Cactus &cactus1, Cactus& cactus2) {
-    if (dino.y < 0.2)
+    if (dino.getY() < 0.2)
     {
-        if ((cactus1.x + 1.2) > (dino.x - 0.7))
+        if (cactus1.getX() > dino.getX())
         {
-            if ((cactus1.x + 1.2) - (dino.x - 0.7) < 0.125)
+            if (cactus1.getX() - dino.getX() < 0.125)
             {
                 glfwSetWindowShouldClose(window, GL_TRUE);
             }
         }
-        if ((cactus2.x + 1.2) > (dino.x - 0.7))
+        if (cactus2.getX() > dino.getX())
         {
-            if ((cactus2.x + 1.2) - (dino.x - 0.7) < 0.125)
+            if (cactus2.getX() - dino.getX() < 0.125)
             {
                 glfwSetWindowShouldClose(window, GL_TRUE);
             }
@@ -55,11 +49,11 @@ void checkCollision(Dinosaur &dino, Bird& bird, Cactus &cactus1, Cactus& cactus2
     }
     if (!dino.bend())
     {
-        if (dino.y < 0.2)
+        if (dino.getY() < 0.2)
         {
-            if ((bird.x + 2.0) > (dino.x - 0.7))
+            if (bird.getX() > dino.getX())
             {
-                if ((bird.x + 2.0) - (dino.x - 0.7) < 0.125)
+                if (bird.getX() - dino.getX() < 0.125)
                 {
                     glfwSetWindowShouldClose(window, GL_TRUE);
                 }
@@ -324,14 +318,6 @@ void initGame()
     stbi_image_free(data12);
 }
 
-void checkScore(Dinosaur &dino, Bird& bird, Cactus &cactus1, Cactus& cactus2, Score &points)
-{
-    if (dino.x == cactus1.x || dino.x == cactus2.x)
-    {
-        points.result += 1;
-    }
-}
-
 int main(void)
 {
     char user_key;
@@ -339,6 +325,8 @@ int main(void)
     Bird bird;
     Cactus cactus1, cactus2;
     Ground field1, field2;
+
+
     Score points;
   
     if (!glfwInit())
@@ -355,8 +343,8 @@ int main(void)
     glfwSetKeyCallback(window, key_callback);
 
     initGame();
-    field2.x = 2.0;
-    cactus2.x = 1.7;
+    field2.setX(2.0);
+    cactus2.setX(2.3);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -368,7 +356,7 @@ int main(void)
         points.show();
         bird.show();
 
-        if (dino.y <= 0.01)
+        if (dino.getY() <= 0.01)
         {
             if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             {
@@ -389,7 +377,11 @@ int main(void)
         cactus1.show();
         cactus2.show();
 
-        checkScore(dino, bird, cactus1, cactus2, points);
+        if (dino.jumpOverObstacle(cactus1.getX(), cactus1.getY()) || dino.jumpOverObstacle(cactus2.getX(), cactus2.getY()))
+        {
+            points.result += 1;
+        }
+
         checkCollision(dino, bird, cactus1, cactus2);
 
         glfwSwapBuffers(window);
