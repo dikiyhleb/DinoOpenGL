@@ -1,8 +1,6 @@
 #pragma once
 #include "common.h"
 
-using namespace std;
-
 #ifndef GROUND_H
 #define GROUND_H
 

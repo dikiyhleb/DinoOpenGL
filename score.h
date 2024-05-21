@@ -11,7 +11,6 @@ extern float vertexNum[];
 class Score
 {
 private:
-
 public:
 	int result;
 	Score() 

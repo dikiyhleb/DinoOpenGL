@@ -16,7 +16,7 @@ private:
     unsigned int textureTemp;
 public:
     float x, y, jumpHeight;
-    float gravity = 0.00065f * gameSpeed;
+    float gravity = 0.00065 * gameSpeed;
 
     Dinosaur()
     {

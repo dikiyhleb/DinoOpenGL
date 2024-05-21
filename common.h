@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <ctime>
-#include <algorithm>
 #include <conio.h>
 #include <GLFW/glfw3.h>
 

@@ -134,14 +134,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bird.cpp" />
+    <ClCompile Include="cactus.cpp" />
+    <ClCompile Include="dinosaur.cpp" />
+    <ClCompile Include="ground.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Documents\libraries\OpenGL\stb_image.h" />
+    <ClInclude Include="bird.h" />
+    <ClInclude Include="cactus.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="dinosaur.h" />
+    <ClInclude Include="ground.h" />
     <ClInclude Include="score.h" />
   </ItemGroup>
   <ItemGroup>
