@@ -18,10 +18,6 @@ number2, number3, number4, number5, number6, number7, number8, number9, textureB
 
 float gameSpeed = 1.25f;
 
-float vertexNum[] = { -0.05,-0.05,0 , 0.05,-0.05,0 , 0.05,0.05,0 , -0.05,0.05,0 };
-
-float texCoord[] = { 0,1 , 1,1 , 1,0 , 0,0 };
-
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -378,7 +374,7 @@ int main(void)
 
         if (dino.jumpOverObstacle(cactus1.getX(), cactus1.getY()) || dino.jumpOverObstacle(cactus2.getX(), cactus2.getY()))
         {
-            points.result += 1;
+            points.setResult(points.getResult() + 1);
         }
 
         checkCollision(dino, bird, cactus1, cactus2);
